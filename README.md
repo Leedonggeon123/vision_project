@@ -35,8 +35,6 @@
 2. 검사할 때 WPF 앱이 **Python 엔진을 켜 두고**, 사진 경로 한 줄을 보내면 엔진이 **결과 JSON 한 줄**을 돌려줍니다. (표준 입출력)
 3. 앱이 점수를 기준값과 비교해 OK/NG를 판정하고, SQLite에 저장한 뒤 화면에 보여 줍니다.
 
-자세한 흐름은 [프로그램 흐름 설계도](docs/images/program_flow.png)를 참고하세요.
-
 ## 성능
 
 | 항목 | 결과 |
@@ -55,7 +53,7 @@
 ├─ model/                   학습된 모델 파일 위치 (저장소에는 포함되지 않음)
 ├─ data/                    MVTec AD 데이터 위치 (저장소에는 포함되지 않음)
 ├─ demo/                    시연 정답표 (영상은 용량·라이선스 문제로 제외)
-└─ docs/                    개발계획서, DB정의서, 테스트결과서, 사용자매뉴얼, 도식(PNG)
+└─ docs/images/             README에 쓰는 화면 캡처와 구성도 그림
 ```
 
 ## 시작하기
@@ -107,35 +105,31 @@ python train.py               # 학습 + 평가, ~/model_out/patchcore_metal_nut
 
 ## 웹캠 시연
 
-모니터·핸드폰에 너트 사진 영상을 틀고 웹캠으로 다시 찍어 검사하는 시연을 만들었습니다.
+핸드폰에 너트 사진 영상을 틀고 웹캠으로 다시 찍어 검사하는 시연을 만들었습니다.
 
 - 화면을 다시 찍으면 정상 사진도 점수가 올라가므로 **기준값을 0.95 안팎**으로 올립니다. (원본 사진 검사는 0.5 안팎)
-- **어두운 방, 낮춘 모니터 밝기, 웹캠 고정**, 주황 네모에 사진을 꽉 채웁니다.
+- **어두운 방, 낮춘 화면 밝기, 웹캠 고정**, 주황 네모에 사진을 꽉 채웁니다.
 - 자동 검사 간격 2초 (사진 한 장당 5초 영상 기준)
 - 웹캠이 없으면 **[폴더 연속 검사]** 로 대신할 수 있습니다.
 
-자세한 순서는 [사용자 매뉴얼](docs/사용자매뉴얼.hwpx)의 6장을 참고하세요.
-
-## 문서
-
-| 문서 | 위치 |
-|---|---|
-| 개발계획서 | [docs/개발계획서.hwpx](docs/개발계획서.hwpx) |
-| 요구사항 분석서 | [docs/요구사항분석서.hwpx](docs/요구사항분석서.hwpx) |
-| 개발 일정표 | [docs/개발일정표.hwpx](docs/개발일정표.hwpx) |
-| 프로그램 흐름도 | [docs/프로그램흐름도.png](docs/프로그램흐름도.png) |
-| DB 정의서 · ERD | [docs/DB정의서.hwpx](docs/DB정의서.hwpx), [erd.png](docs/images/erd.png) |
-| 테스트 결과서 | [docs/테스트결과서.hwpx](docs/테스트결과서.hwpx) |
-| 사용자 매뉴얼 | [docs/사용자매뉴얼.hwpx](docs/사용자매뉴얼.hwpx) |
-| 제작 과정 설명서 | [docs/vision_inspection_build_guide.pdf](docs/vision_inspection_build_guide.pdf) |
-| 일정표 / 프로그램 흐름 / 구성도 | [schedule.png](docs/images/schedule.png) · [program_flow.png](docs/images/program_flow.png) · [architecture.png](docs/images/architecture.png) |
-
-PDF 사본은 `docs/pdf/` 에 있습니다.
-
 ## 데이터베이스
 
-SQLite 파일 `inspection.db` 한 개, 표는 `inspections` 1개입니다. (검사 1건 = 1행, 사진은 파일로 저장하고 경로만 기록)
-컬럼과 쿼리는 [DB 정의서](docs/DB정의서.hwpx)를 참고하세요.
+SQLite 파일 `inspection.db` 한 개, 표는 `inspections` 1개입니다. 검사 1건이 1행이며, 사진은 파일로 저장하고 DB에는 경로만 기록합니다.
+
+| 컬럼 | 타입 | 설명 |
+|---|---|---|
+| id | INTEGER (PK) | 검사 번호, 자동 증가 |
+| inspected_at | TEXT | 검사 시각 (`yyyy-MM-dd HH:mm:ss`) |
+| image_path | TEXT | 원본 사진 경로 (`captures/`) |
+| heatmap_path | TEXT (NULL 가능) | 히트맵 경로 (`results/`) |
+| result | TEXT | `OK` 또는 `NG` |
+| score | REAL | 이상 점수 (0~1, 높을수록 이상) |
+| threshold | REAL | 검사 당시 기준값 (설정을 바꿔도 과거 값은 유지) |
+| elapsed_ms | INTEGER | 엔진 검사 시간(ms) |
+| source | TEXT | 입력 방식: `camera`(웹캠) 또는 `file`(파일·폴더) |
+| camera_id | INTEGER (NULL 가능) | 웹캠 번호 |
+
+기간 조회를 빠르게 하려고 `inspected_at`에 인덱스(`idx_inspections_time`)를 두었습니다.
 
 ## 알려진 한계
 
