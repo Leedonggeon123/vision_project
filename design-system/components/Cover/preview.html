@@ -1,0 +1,43 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+html,body{margin:0;background:var(--bg)}
+.cover{position:relative;width:960px;height:288px;background:var(--bg);overflow:hidden;font-family:var(--font-sans)}
+svg{position:absolute;left:0;top:0}
+.amber{fill:var(--amber)}.muted{fill:var(--muted)}.ng{fill:var(--ng)}.ok{fill:var(--ok)}.line{fill:var(--border)}
+.slab{rx:var(--radius-lg)}
+.text{position:absolute;left:32px;bottom:28px;width:440px}
+h1{margin:0;font-size:64px;line-height:.95;font-weight:700;color:var(--ink)}
+p{margin:12px 0 0;font-size:14px;line-height:1.4;color:var(--muted)}
+</style></head><body>
+<div class="cover">
+<svg width="960" height="288" viewBox="0 0 960 288">
+<!--
+blocks: amber 216x206 (bleeds top), muted 96x168, ng 144x72 (bleeds right), border 144x80 (bleeds right), ok 56x56; amber carries the brand, muted is the light relief, ng/ok stay small because they only mean a verdict.
+arrangement: one tall amber slab with satellites stacked to its right, two right blocks bleeding off the edge.
+pattern: a row of numbered-badge pills as plain discs (radius = half of 24px) - the docs pair every screenshot with orange number badges.
+steps: spacing 8/12/16/24/28 as gaps and pitch 36; radius-lg 14 on blocks, radius-pill on discs.
+-->
+<rect class="amber slab" x="496" y="-14" width="216" height="206"/>
+<rect class="muted slab" x="728" y="24" width="96" height="168"/>
+<rect class="ng slab" x="840" y="24" width="144" height="72"/>
+<rect class="line slab" x="840" y="112" width="144" height="80"/>
+<rect class="ok slab" x="728" y="208" width="56" height="56"/>
+<circle class="amber" cx="508" cy="240" r="12"/>
+<circle class="amber" cx="544" cy="240" r="12"/>
+<circle class="amber" cx="580" cy="240" r="12"/>
+<circle class="amber" cx="616" cy="240" r="12"/>
+<circle class="amber" cx="652" cy="240" r="12"/>
+<circle class="amber" cx="688" cy="240" r="12"/>
+<circle class="muted" cx="808" cy="236" r="0"/>
+<circle class="line" cx="808" cy="240" r="12"/>
+<circle class="line" cx="844" cy="240" r="12"/>
+<circle class="line" cx="880" cy="240" r="12"/>
+<circle class="line" cx="916" cy="240" r="12"/>
+<circle class="line" cx="952" cy="240" r="12"/>
+</svg>
+<div class="text"><h1>내스타일<br>디자인 시스템</h1><p>어두운 바탕, 주황 번호 하나. 화면을 쉬운 말로 설명하는 문서 스타일.</p></div>
+</div>
+</body></html>

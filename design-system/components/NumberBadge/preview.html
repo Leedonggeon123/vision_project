@@ -1,0 +1,19 @@
+<!-- @dsCard group="문서 구성요소" height=120 subtitle="번호 배지" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+body{margin:0;padding:24px;background:var(--bg);font-family:var(--font-sans)}
+.row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.b{min-width:24px;height:24px;padding:0 5px;box-sizing:border-box;border-radius:var(--radius-pill);background:var(--amber);color:var(--on-amber);font-weight:700;font-size:12px;line-height:24px;text-align:center}
+.ring{box-shadow:var(--badge-ring)}
+.photo{position:relative;width:200px;height:64px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--surface)}
+.photo .b{position:absolute;transform:translate(-50%,-50%)}
+.s{color:var(--muted);font-size:13px}
+</style></head><body>
+<div class="row">
+  <span class="b">1</span><span class="b">12</span><span class="b">C2</span>
+  <div class="photo"><span class="b ring" style="left:30%;top:50%">3</span><span class="b ring" style="left:70%;top:40%">4</span></div>
+  <span class="s">스크린샷 위 (링 포함)</span>
+</div>
+</body></html>

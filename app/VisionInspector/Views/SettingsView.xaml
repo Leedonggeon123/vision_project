@@ -1,0 +1,91 @@
+<UserControl x:Class="VisionInspector.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24,28,20" MaxWidth="820" HorizontalAlignment="Left">
+            <TextBlock Text="설정" Style="{StaticResource PageTitle}" Margin="0,0,0,16"/>
+
+            <!-- 검사 -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="검사" Style="{StaticResource CardTitle}"/>
+
+                    <TextBlock Text="OK/NG 기준값 (점수가 이 값 이상이면 NG)"/>
+                    <DockPanel Margin="0,6,0,14">
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Threshold, StringFormat=F2}" Width="50"
+                                   TextAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}"/>
+                        <Slider Minimum="0.05" Maximum="0.95" SmallChange="0.01" LargeChange="0.05"
+                                TickFrequency="0.05" IsSnapToTickEnabled="False" Value="{Binding Threshold}"/>
+                    </DockPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="자동 검사 간격 (초)"/>
+                            <TextBox Text="{Binding IntervalSeconds}" Margin="0,6,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="웹캠 번호 (보통 0)"/>
+                            <TextBox Text="{Binding CameraIndex}" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 웹캠 촬영 영역 -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="웹캠 촬영 영역" Style="{StaticResource CardTitle}"/>
+                    <CheckBox Content="가운데 정사각형만 잘라서 검사" IsChecked="{Binding CropEnabled}"/>
+                    <TextBlock Text="자를 크기 (화면 짧은 변 기준)" Margin="0,12,0,0"/>
+                    <DockPanel Margin="0,6,0,8">
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding CropPercent, StringFormat={}{0:F0}%}" Width="50"
+                                   TextAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}"/>
+                        <Slider Minimum="30" Maximum="100" SmallChange="1" LargeChange="5" Value="{Binding CropPercent}"/>
+                    </DockPanel>
+                    <TextBlock Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"
+                               Text="웹캠 미리보기의 주황 네모 안쪽만 검사됩니다. 너트 사진이 네모를 꽉 채우도록 핸드폰과 웹캠 위치를 맞추세요."/>
+                </StackPanel>
+            </Border>
+
+            <!-- 엔진 -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="검사 엔진 (Python)" Style="{StaticResource CardTitle}"/>
+                    <TextBlock Text="Python 실행 파일"/>
+                    <TextBox Text="{Binding PythonPath}" Margin="0,6,0,12"/>
+                    <TextBlock Text="엔진 스크립트"/>
+                    <TextBox Text="{Binding EngineScriptPath}" Margin="0,6,0,12"/>
+                    <TextBlock Text="{Binding EngineInfo}" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 저장 위치 (읽기 전용) -->
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14">
+                <StackPanel>
+                    <TextBlock Text="저장 위치" Style="{StaticResource CardTitle}"/>
+                    <TextBlock Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap">
+                        <Run Text="원본 사진: "/><Run Text="{Binding CapturesDir, Mode=OneWay}"/>
+                    </TextBlock>
+                    <TextBlock Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,4,0,0">
+                        <Run Text="히트맵: "/><Run Text="{Binding ResultsDir, Mode=OneWay}"/>
+                    </TextBlock>
+                    <TextBlock Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,4,0,0">
+                        <Run Text="이력 DB: "/><Run Text="{Binding DbPath, Mode=OneWay}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="저장" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}" Width="120"/>
+                <Button Content="엔진 다시 시작" Command="{Binding RestartEngineCommand}"
+                        Style="{StaticResource SecondaryButton}" Width="150" Margin="10,0,0,0"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Message}" Foreground="{StaticResource MutedBrush}" Margin="2,12,0,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

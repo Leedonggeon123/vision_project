@@ -1,0 +1,50 @@
+서버 PC 앞에서 할 일 (USB 방식)
+=================================
+
+준비: USB에 server_kit 폴더 전체를 담아 간다.
+     (setup.sh, train.py, mvtec\metal_nut 폴더가 들어 있음)
+
+서버 PC 조건: 인터넷이 되는 연결(와이파이)이 켜져 있어야 설치가 된다.
+              PyTorch 설치 용량이 수 GB일 수 있다.
+
+1. USB의 server_kit 폴더를 WSL 홈으로 복사
+   (USB가 윈도우에서 D: 라면 WSL에서는 /mnt/d/ 로 보인다)
+
+       cp -r /mnt/d/server_kit ~/server_kit
+       cd ~/server_kit
+
+2. 줄바꿈 문제 방지 (윈도우에서 만든 파일이라 안전하게 한 번 실행)
+
+       sed -i 's/\r$//' setup.sh train.py
+
+3. 데이터를 홈의 mvtec 폴더로 옮기기
+
+       mkdir -p ~/mvtec
+       cp -r mvtec/metal_nut ~/mvtec/
+
+4. 설치 (한 번만)
+
+       bash setup.sh
+
+   끝나면 출력에서 아래 두 가지를 확인한다.
+   - "cuda 사용 가능: True" 와 GPU 이름(RTX 5090)
+   - anomalib Version (기록해 둘 것. 나중에 이 PC에서 모델을 열 때 같은 버전이 필요)
+
+5. 학습 실행
+
+       source ~/venv_anomalib/bin/activate
+       python train.py
+
+   끝나면 ~/model_out/patchcore_metal_nut.ckpt 가 생긴다.
+
+6. 모델 파일을 USB로 가져오기
+
+       cp ~/model_out/patchcore_metal_nut.ckpt /mnt/d/
+
+   (anomalib Version 도 USB에 메모해서 가져올 것)
+
+막혔을 때
+---------
+- 오류가 나면 화면 전체를 사진으로 찍거나 글로 옮겨서 Claude에게 보낸다.
+- 비밀번호나 계정 정보는 보내지 않는다.
+- nvidia-smi 로 다른 사람이 GPU를 쓰고 있지 않은지 먼저 확인한다.

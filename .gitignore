@@ -1,0 +1,33 @@
+# ---- Python ----
+.venv/
+.venv_engine/
+__pycache__/
+*.pyc
+
+# ---- .NET / Visual Studio ----
+bin/
+obj/
+.vs/
+*.user
+
+# ---- 용량이 크거나 라이선스상 올리지 않는 것 ----
+# 학습된 모델 (약 227MB, GitHub 파일 100MB 제한 초과) -> model/README.md 참고
+model/*
+!model/README.md
+# MVTec AD 데이터 (CC BY-NC-SA, 용량) -> data/README.md 참고
+data/*
+!data/README.md
+# 시연 영상·슬라이드 (MVTec 사진 포함, 용량) -- 정답표만 남김
+demo/*
+!demo/정답표*.txt
+
+# ---- 실행하면 생기는 것 ----
+captures/
+results/
+inspection.db
+app/settings.json
+app/crash.log
+
+# ---- 기타 ----
+*.tmp
+Thumbs.db

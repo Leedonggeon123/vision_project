@@ -1,0 +1,24 @@
+<!-- @dsCard group="문서 구성요소" height=300 subtitle="스크린샷 프레임 + 번호" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+body{margin:0;padding:24px;background:var(--bg);font-family:var(--font-sans)}
+.shot{position:relative;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);max-width:520px}
+.screen{height:200px;display:grid;grid-template-columns:2fr 1fr;gap:12px;padding:16px;box-sizing:border-box}
+.cam{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+.side{display:flex;flex-direction:column;gap:12px}
+.side div{flex:1;border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+.ok{color:var(--ok)}.ng{color:var(--ng)}
+.b{position:absolute;transform:translate(-50%,-50%);min-width:24px;height:24px;padding:0 5px;box-sizing:border-box;border-radius:var(--radius-pill);background:var(--amber);color:var(--on-amber);font-weight:700;font-size:12px;line-height:24px;text-align:center;box-shadow:var(--badge-ring)}
+</style></head><body>
+<div class="shot">
+  <div class="screen">
+    <div class="cam">카메라 영상 (예시)</div>
+    <div class="side"><div class="ok">OK</div><div class="ng">NG</div></div>
+  </div>
+  <span class="b" style="left:6%;top:12%">1</span>
+  <span class="b" style="left:93%;top:28%">2</span>
+  <span class="b" style="left:93%;top:70%">3</span>
+</div>
+</body></html>
